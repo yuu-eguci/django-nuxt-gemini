@@ -1,0 +1,58 @@
+# docker-compose.yml のファイルフォーマットです。
+# https://docs.docker.jp/compose/compose-file/compose-versioning.html#compose-file-version-3
+version: '3.8'
+
+# service = container
+services:
+
+  # service name (ほかから参照するとき使うので重要です。)
+  mysql-service:
+    # NOTE: container name conflict を防ぐため gemini- をつけている。
+    container_name: gemini-mysql-container
+    build:
+      context: ./mysql-container
+      dockerfile: Dockerfile
+    # NOTE: 他のプロジェクトの mysql との重複を避けるため、変更している。
+    ports:
+      - 3307:3306
+    volumes:
+      - ./db/mysql_data:/var/lib/mysql
+      - ./db/mysql_log:/var/log/mysql
+      - ./db/mysql_conf:/etc/mysql/conf.d
+    # NOTE: 開発環境では .env を使うし、本番環境では .env を (GitHub Actions が) 上書きして使うことを想定。
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+
+  webapp-service:
+    # NOTE: container name conflict を防ぐため gemini- をつけている。
+    container_name: gemini-webapp-container
+    build:
+      context: ./webapp-container
+      dockerfile: Dockerfile
+    # NOTE: 他のプロジェクトの django との重複を避けるため、変更している。
+    # NOTE: それぞれ Django と Nuxt.js のためのポート。
+    ports:
+      - 8001:8000
+      - 8081:8080
+      - 3001:3000
+    # tty, stdin_open しておくと exec するときに -it がいらないみたい。
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./webapp:/webapp
+      # pipenv 仮想環境をホストと共有。
+      - ./python-packages:/root/.local/share
+    # NOTE: 開発環境では .env を使うし、本番環境では .env を (GitHub Actions が) 上書きして使うことを想定。
+    environment:
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - APP_HOST=${APP_HOST}
+    depends_on:
+      - mysql-service
