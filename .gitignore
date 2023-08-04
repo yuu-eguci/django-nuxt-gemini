@@ -1,0 +1,8 @@
+*~
+*#
+.DS_Store
+.vscode
+!.gitkeep
+db/
+python-packages/
+.env
