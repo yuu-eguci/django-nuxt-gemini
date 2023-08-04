@@ -1,4 +1,4 @@
-django-nuxt-gemini
+django-nuxt-gemini ♊
 ===
 
 ✌🏽✌🏽 🐍 🐳 🇳 Python 3.10 + Django v4 + Yarn + Nuxt v2 + Nginx + Docker | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Django から Nuxt.js を配信しよーぜ。あと Docker は当然使うぜ。でもあとで学んだんだけど、 "Django から Nuxt.js を配信" ってのはおかしくて、実際は "Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ" だよ。
