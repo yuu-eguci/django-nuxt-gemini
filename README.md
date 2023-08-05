@@ -28,8 +28,7 @@ create-nuxt-app -v
 # --> create-nuxt-app/5.0.0 linux-x64 node-v18.17.0
 
 # Django のほう。
-pipenv shell
-python manage.py runserver 0.0.0.0:8000
+pipenv run python manage.py runserver 0.0.0.0:8000
 # --> http://localhost:8001/
 
 # Nuxt.js のほう。
@@ -49,19 +48,23 @@ cd ./frontend-nuxt; yarn dev --hostname 0.0.0.0
 ```bash
 docker compose exec webapp-service sh
 
-# nginx の設定を更新。
-cp /webapp/nginx.conf /etc/nginx/http.d/default.conf
-# nginx の設定ファイルをテスト。
-nginx -t
-# nginx を再起動。
-nginx -s reload
-
 # Nuxt.js の静的サイトを生成。
-cd /webapp/frontend-nuxt; yarn generate
+cd /webapp/frontend-nuxt; BASE_URL=/ yarn generate
 mkdir -p /webapp/static; cp -r /webapp/frontend-nuxt/dist/* /webapp/static/
 
 # wsgi で django を起動する。
 # 主に admin のために collectstatic を実行する。
 pipenv run python manage.py collectstatic --noinput
 pipenv run gunicorn --bind 0.0.0.0:8000 config.wsgi:application
+
+# nginx の設定を更新。
+cp /webapp/nginx.conf /etc/nginx/http.d/default.conf
+# nginx の設定ファイルをテスト。
+nginx -t
+# nginx を起動。
+nginx
+# nginx を再起動。
+nginx -s reload
+
+# --> http://localhost:8081/
 ```
