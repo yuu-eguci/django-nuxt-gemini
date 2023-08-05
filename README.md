@@ -9,6 +9,8 @@ django-nuxt-gemini ♊
     - nuxt は yarn generate で静的サイトにして、 nginx (8080/ -> 8081) で配信して、
     - django は nginx と gunicorn (8081/api/ -> 8080 -> 8000) で配信するよ!
 
+![](docs/(2023-08-05)overall-view.png)
+
 ## runserver と yarn dev で起動するところまで
 
 ```bash
