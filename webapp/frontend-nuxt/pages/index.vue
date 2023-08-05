@@ -78,6 +78,16 @@
 
 <script>
 export default {
-  name: 'IndexPage'
+  name: 'IndexPage',
+  async mounted () {
+    try {
+      const { data } = await this.$axios.get('api/v1/foo')
+      // eslint-disable-next-line no-console
+      console.info({ data })
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error({ error })
+    }
+  }
 }
 </script>

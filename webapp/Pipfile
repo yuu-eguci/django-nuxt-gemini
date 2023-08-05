@@ -7,10 +7,12 @@ name = "pypi"
 django = "*"
 mysqlclient = "*"
 gunicorn = "*"
+djangorestframework = "*"
 
 [dev-packages]
 flake8 = "*"
 mypy = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.10"
