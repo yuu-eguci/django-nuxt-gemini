@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    # NOTE: 本リポジトリでは、本番環境では backend, frontend で共通ドメインを使うことを想定している。
+    #       だから django-cors-headers は [dev-packages] に入れています。
+    #       本番環境を作るときは本番用の settings を作ってください。
     'corsheaders',
 ]
 

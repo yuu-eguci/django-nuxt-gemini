@@ -1,6 +1,9 @@
 django-nuxt-gemini ♊
 ===
 
+TODO: 開発環境で、 3001 -> 8001 するところまでは完成済み。
+      8081 のみで動かすところが未完成。具体的には django 側に本番用の settings が必要。
+
 ✌🏽✌🏽 🐍 🐳 🇳 Python 3.10 + Django v4 + Yarn + Nuxt v2 + Nginx + Docker | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Django から Nuxt.js を配信しよーぜ。あと Docker は当然使うぜ。でもあとで学んだんだけど、 "Django から Nuxt.js を配信" ってのはおかしくて、実際は "Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ" だよ。
 
 - python + django + yarn + nuxt + nginx なんつー container を用意して、
@@ -14,10 +17,14 @@ django-nuxt-gemini ♊
 ## runserver と yarn dev で起動するところまで
 
 ```bash
+# Just for the first installation.
+cp ./local.env ./.env
+
 # Create containers
 docker compose up -d
 
 # Get into webapp-service
+# NOTE: It's a good practice to have separate terminals for Django and Nuxt.js for easier debugging and log tracking.
 docker compose exec webapp-service sh
 # Check↓
 python -V
@@ -28,14 +35,20 @@ yarn -v
 # --> 1.22.19
 create-nuxt-app -v
 # --> create-nuxt-app/5.0.0 linux-x64 node-v18.17.0
+(cd ./frontend-nuxt; yarn list nuxt)
+# --> └─ nuxt@2.17.1
+# NOTE: warning が出るけど、それは部分一致検索だけを持つ yarn list が悪い。
 
 # Django のほう。
+pipenv sync --dev
+pipenv run python manage.py migrate
 pipenv run python manage.py runserver 0.0.0.0:8000
-# --> http://localhost:8001/
+# --> http://localhost:8001/ でアクセス。
 
 # Nuxt.js のほう。
-cd ./frontend-nuxt; yarn dev --hostname 0.0.0.0
-# --> http://localhost:3001/
+(cd ./frontend-nuxt; yarn install)
+(cd ./frontend-nuxt; yarn dev --hostname 0.0.0.0)
+# --> http://localhost:3001/ でアクセス。
 ```
 
 ## Nuxt.js を静的サイトとして nginx で配信する
