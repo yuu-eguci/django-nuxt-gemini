@@ -37,7 +37,7 @@ create-nuxt-app -v
 # --> create-nuxt-app/5.0.0 linux-x64 node-v18.17.0
 (cd ./frontend-nuxt; yarn list nuxt)
 # --> └─ nuxt@2.17.1
-# NOTE: warning が出るけど、それは部分一致検索だけを持つ yarn list が悪い。
+# NOTE: warning が出るけど、それは完全一致検索を欠く yarn list が悪い。
 
 # Django のほう。
 pipenv sync --dev
@@ -84,4 +84,16 @@ nginx
 nginx -s reload
 
 # --> http://localhost:8081/
+```
+
+## VSCode を使っているなら settings.json にコレ書いとくとヨシ
+
+"container 内仮想環境にある python modules の中身へ F12 でジャンプできない" 問題をこれで回避できる。
+
+```json
+{
+    "python.defaultInterpreterPath": "[repository までの絶対パス]/python-packages/virtualenvs/webapp-qv(実際のパス)/bin/python",
+    "python.autoComplete.extraPaths": ["[repository までの絶対パス]/python-packages/virtualenvs/webapp-qv(実際のパス)/lib/python3.10/site-packages"],
+    "python.analysis.extraPaths": ["[repository までの絶対パス]/python-packages/virtualenvs/webapp-qv(実際のパス)/lib/python3.10/site-packages"],
+}
 ```
