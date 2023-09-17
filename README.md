@@ -61,6 +61,8 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 - `nginx` のとき: Container の外側 (8081) -> Nginx (8080) -> Gunicorn (8000) という流れになるよ。
 
 ```bash
+# 本番用の .env をここで用意。
+
 docker compose exec webapp-service sh
 
 # Nuxt.js の静的サイトを生成。
