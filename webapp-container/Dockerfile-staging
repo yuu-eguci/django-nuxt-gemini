@@ -11,7 +11,7 @@ RUN apk add --no-cache --update \
     pip install -U pipenv
 
 # ログの見方↓
-#     docker-compose logs -f --tail=10 webapp-service
+#     docker compose logs -f --tail=10 webapp-service
 CMD ["sh", "-c", "pipenv sync && pipenv run python manage.py migrate --settings=config.settings_staging && pipenv run python manage.py collectstatic --noinput --settings=config.settings_staging && pipenv run gunicorn --bind 0.0.0.0:8000 config.wsgi:application"]
 
 # NOTE: このポートを解放する意図である、というドキュメントとして機能するコマンドです。
