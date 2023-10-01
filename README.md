@@ -60,30 +60,96 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 - `runserver` のとき: Container の外側 (8001) -> Django (8000) という流れ。
 - `nginx` のとき: Container の外側 (8081) -> Nginx (8080) -> Gunicorn (8000) という流れになるよ。
 
+### ステージング環境用の .env を用意する
+
 ```bash
-# 本番用の .env をここで用意。
+# staging.env がトップディレクトリにあるものとする。
+```
 
-docker compose exec webapp-service sh
+### デプロイパッケージを作る
 
-# Nuxt.js の静的サイトを生成。
-cd /webapp/frontend-nuxt; BASE_URL=/ yarn generate
-mkdir -p /webapp/static; cp -r /webapp/frontend-nuxt/dist/* /webapp/static/
+```bash
+# Repository から zip をダウンロード。
 
-# wsgi で django を起動する。
-# 主に admin のために collectstatic を実行する。
-pipenv run python manage.py collectstatic --noinput
-pipenv run gunicorn --bind 0.0.0.0:8000 config.wsgi:application
+# トップディレクトリでターミナルを。
 
-# nginx の設定を更新。
-cp /webapp/nginx.conf /etc/nginx/http.d/default.conf
-# nginx の設定ファイルをテスト。
-nginx -t
-# nginx を起動。
-nginx
-# nginx を再起動。
-nginx -s reload
+# staging.env をチェック。 (staging.env を置くこと)
+[ -f ./staging.env ] && echo "Env exists, proceed." || echo "Error: No env."
 
-# --> http://localhost:8081/
+# Nuxt.js の静的サイトを生成して static フォルダへ配置。
+(cd ./webapp/frontend-nuxt; yarn install)
+# ステージング環境用の .env を適用してビルド。
+# NOTE: .env 内部のコメント行を grep で無視しつつ行う。
+(cd ./webapp/frontend-nuxt; env $(grep -v '^#' ../../staging.env | xargs) yarn generate --production)
+
+mkdir ./webapp/static; mv ./webapp/frontend-nuxt/dist/* ./webapp/static/
+
+# デプロイパッケージに不要なものを削除して zip 化。
+mkdir ./deploy_package
+rsync -av --exclude='.DS_Store' --exclude='webapp/.gitignore' --exclude='webapp/frontend-nuxt/*' docker-compose.yml mysql-container staging.env webapp webapp-container ./deploy_package/
+zip -r deploy_package.zip deploy_package/
+
+# デプロイパッケージをサーバへ UL。 (コマンドは別メモに。 IP とか入ってるからさ。)
+scp -i ~/.ssh/???.pem deploy_package.zip username@ip:~/
+```
+
+### デプロイパッケージを展開する
+
+```bash
+# デプロイ先のサーバへ ssh 接続。
+
+# デプロイパッケージを展開。
+sudo unzip ~/deploy_package.zip -d ~/
+
+# 環境変数を用意。
+sudo mv ~/deploy_package/staging.env ~/deploy_package/.env
+
+# 中身を /webapp へコピー。
+# NOTE: ~/deploy_package/* は .env を無視する。 (えぇ〜)
+sudo cp -r ~/deploy_package/. /webapp/
+
+# ~/deploy_package.zip と ~/deploy_package/ を削除
+sudo rm -rf ~/deploy_package.zip ~/deploy_package/
+```
+
+### Docker を起動する
+
+```bash
+# Docker 存在確認。
+docker --version
+# --> Docker version 24.0.6, build ed223bc
+
+# Docker コンテナを起動。
+(cd /webapp; sudo docker compose up -d)
+
+# MySQL のユーザを確認。
+(cd /webapp; sudo docker compose exec mysql-service sh)
+# mysql -u StagingAdmin -p
+# --> Enter password: ??? (stage.env に書いてある) --> 入れることを確認
+# SHOW DATABASES; --> app があることを確認
+# exit
+
+(cd /webapp; sudo docker compose exec webapp-service sh -c "pipenv sync")
+(cd /webapp; sudo docker compose exec webapp-service sh -c "pipenv run python manage.py migrate --settings=config.settings_staging")
+(cd /webapp; sudo docker compose exec webapp-service sh -c "pipenv run python manage.py collectstatic --noinput --settings=config.settings_staging")
+(cd /webapp; sudo docker compose exec webapp-service sh -c "pipenv run gunicorn --bind 0.0.0.0:8000 config.wsgi:application")
+# curl http://localhost:8001
+```
+
+### Nginx を起動する
+
+```bash
+# nginx の設定を追加。
+# NOTE: /etc/nginx/nginx.conf の中に 'include /etc/nginx/conf.d/*.conf;' の記載がある。
+#       そこで読んでもらうことを意図しています。
+#       (あと、デフォルトの設定ファイルの編集を避けるのも意図。)
+sudo cp /webapp/staging-nginx.conf /etc/nginx/conf.d/default.conf
+
+sudo nginx -t
+
+# リロード。
+sudo systemctl reload nginx
+# NOTE: server_name が localhost ではないので curl http://localhost は失敗する。
 ```
 
 ## VSCode を使っているなら settings.json にコレ書いとくとヨシ
