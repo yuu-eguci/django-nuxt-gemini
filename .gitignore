@@ -6,3 +6,4 @@
 db/
 python-packages/
 .env
+staging.env
