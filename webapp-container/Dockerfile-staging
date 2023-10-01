@@ -1,0 +1,19 @@
+# 他の image はこちら https://hub.docker.com/_/python
+FROM python:3.10-alpine
+
+WORKDIR /webapp
+
+# --no-cache --update: 最新のパッケージをディスク容量を節約しながらインストール。
+RUN apk add --no-cache --update \
+    # For mysqlclient.
+    mariadb-dev gcc libc-dev mysql-client && \
+    pip install --upgrade pip setuptools && \
+    pip install -U pipenv
+
+# ログの見方↓
+#     docker-compose logs -f --tail=10 webapp-service
+CMD ["sh", "-c", "pipenv sync && pipenv run python manage.py migrate --settings=config.settings_staging && pipenv run python manage.py collectstatic --noinput --settings=config.settings_staging && pipenv run gunicorn --bind 0.0.0.0:8000 config.wsgi:application"]
+
+# NOTE: このポートを解放する意図である、というドキュメントとして機能するコマンドです。
+#       ポートを実際に解放するコマンドではありません。
+EXPOSE 8000
