@@ -133,7 +133,7 @@ docker --version
 (cd /webapp; sudo docker compose exec webapp-service sh -c "pipenv run python manage.py migrate --settings=config.settings_staging")
 (cd /webapp; sudo docker compose exec webapp-service sh -c "pipenv run python manage.py collectstatic --noinput --settings=config.settings_staging")
 (cd /webapp; sudo docker compose exec webapp-service sh -c "pipenv run gunicorn --bind 0.0.0.0:8000 config.wsgi:application")
-# curl http://localhost:8001
+# --> curl http://localhost:8001
 ```
 
 ### Nginx を起動する
@@ -149,7 +149,7 @@ sudo nginx -t
 
 # リロード。
 sudo systemctl reload nginx
-# NOTE: server_name が localhost ではないので curl http://localhost は失敗する。
+# --> curl http://localhost
 ```
 
 ## VSCode を使っているなら settings.json にコレ書いとくとヨシ
