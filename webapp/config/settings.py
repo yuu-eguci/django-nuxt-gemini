@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 import logging
-from datetime import datetime, timezone, timedelta
+from utils.logging_formatters import JSTFormatter
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -143,39 +143,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-class JSTFormatter(logging.Formatter):
-    # 現在時刻を取得する関数はこれにする。
-    converter = datetime.now
-    JST = timezone(timedelta(hours=+9), 'JST')
-
-    def formatTime(self, record, datefmt=None):
-        # 現在時刻を UTC で取得 -> 指定のタイムゾーンに変換。
-        # NOTE: converter が datetime.now であることを前提にしているから、危険な書き方かも。
-        #       しかし now は now(tz=) で使うことが推奨されているのでとりあえずこうしておく。
-        ct = self.converter(tz=timezone.utc).astimezone(self.JST)
-
-        # フォーマットが指定されているならそれに。
-        if datefmt:
-            return ct.strftime(datefmt)
-        t = ct.strftime(self.default_time_format)
-        return self.default_msec_format % (t, record.msecs)
-
-
-class UTCFormatter(logging.Formatter):
-    # 現在時刻を取得する関数はこれにする。
-    converter = datetime.now
-
-    def formatTime(self, record, datefmt=None):
-        # 現在時刻を UTC で取得。
-        ct = self.converter(tz=timezone.utc)
-
-        # フォーマットが指定されているならそれに。
-        if datefmt:
-            return ct.strftime(datefmt)
-        t = ct.strftime(self.default_time_format)
-        return self.default_msec_format % (t, record.msecs)
-
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -185,7 +152,8 @@ LOGGING = {
         'standard': {
             '()': JSTFormatter,
             'format': '[%(asctime)s] [%(levelname)s] %(message)s',
-            'datefmt': '%Y-%m-%dT%H:%M:%S+09:00',  # NOTE: %z では ISO 8601 基本形式の +0900 になっちゃう。
+            # NOTE: %z では ISO 8601 基本形式の +0900 になっちゃう。
+            'datefmt': '%Y-%m-%dT%H:%M:%S+09:00',
             # 'datefmt': '%Y-%m-%dT%H:%M:%SZ',
         },
     },
