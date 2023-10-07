@@ -14,6 +14,22 @@ TODO: 開発環境で、 3001 -> 8001 するところまでは完成済み。
 
 ![](docs/(2023-08-05)overall-view.png)
 
+## コイツのいいところ
+
+- Docker 環境 + Django + Nuxt.js (frontend) + MySQL がひとつのリポジトリに詰まっててシンプルだよ。
+    - まあいいことばかりじゃないけど。
+- up で3つ一気に立ち上がるよ。
+
+Django エリアのいいところ
+
+- 開発環境用、本番環境用の settings が分かれてるよ。
+- 当然 Pipenv で管理できてるよ。
+- コンソールと、 ./logs/ へのロギングができてるよ。
+
+Nuxt.js エリアのいいところ
+
+Nginx エリアのいいところ
+
 ## runserver と yarn dev で起動するところまで
 
 ```bash
@@ -68,6 +84,5 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 {
     "python.defaultInterpreterPath": "[repository までの絶対パス]/python-packages/virtualenvs/webapp-qv(実際のパス)/bin/python",
     "python.autoComplete.extraPaths": ["[repository までの絶対パス]/python-packages/virtualenvs/webapp-qv(実際のパス)/lib/python3.10/site-packages"],
-    "python.analysis.extraPaths": ["[repository までの絶対パス]/python-packages/virtualenvs/webapp-qv(実際のパス)/lib/python3.10/site-packages"],
 }
 ```
