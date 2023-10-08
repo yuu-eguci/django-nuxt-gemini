@@ -67,6 +67,12 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 # --> http://localhost:3001/ でアクセス。
 ```
 
+```bash
+# テストコマンド。
+time pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
+(cd ./frontend-nuxt; time yarn test .)
+```
+
 ## Nuxt.js を静的サイトとして nginx で配信する
 
 ここまで出来たよ!
