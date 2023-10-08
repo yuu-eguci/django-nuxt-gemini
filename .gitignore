@@ -1,9 +1,7 @@
 *~
 *#
 .DS_Store
-.vscode
 !.gitkeep
 db/
-python-packages/
 .env
 staging.env

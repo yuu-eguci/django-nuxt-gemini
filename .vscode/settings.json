@@ -1,0 +1,9 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#47895a",
+        "titleBar.activeBackground": "#860437",
+        "titleBar.activeForeground": "#FFFBFD"
+    },
+    "python.autoComplete.extraPaths": ["${workspaceFolder}/webapp/.venv/lib/python*/site-packages"],
+    "python.linting.mypyEnabled": false
+}
