@@ -24,6 +24,10 @@ class JSTFormatter(Formatter):
         # フォーマットが指定されているならそれに。
         if datefmt:
             return ct.strftime(datefmt)
+        # フォーマットが指定されていないならデフォルトのフォーマットを使う。
+        # NOTE: 親クラスのインスタンス変数がきっちり定義されていることを確認。
+        assert self.default_time_format is not None
+        assert self.default_msec_format is not None
         t = ct.strftime(self.default_time_format)
         return self.default_msec_format % (t, record.msecs)
 
@@ -48,5 +52,9 @@ class UTCFormatter(Formatter):
         # フォーマットが指定されているならそれに。
         if datefmt:
             return ct.strftime(datefmt)
+        # フォーマットが指定されていないならデフォルトのフォーマットを使う。
+        # NOTE: 親クラスのインスタンス変数がきっちり定義されていることを確認。
+        assert self.default_time_format is not None
+        assert self.default_msec_format is not None
         t = ct.strftime(self.default_time_format)
         return self.default_msec_format % (t, record.msecs)
