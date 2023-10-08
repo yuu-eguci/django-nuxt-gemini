@@ -24,7 +24,7 @@ Django エリアのいいところ
 
 - 開発環境用、本番環境用の settings が分かれてるよ。
 - 当然 Pipenv で管理できてるよ。
-- コンソールと、 ./logs/ へのロギングができてるよ。
+- コンソールと、 ./logs/ へのロギングができてるよ。ロギングの日時は UTC と JST を選べる。
 
 Nuxt.js エリアのいいところ
 
@@ -82,7 +82,6 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 
 ```json
 {
-    "python.defaultInterpreterPath": "[repository までの絶対パス]/python-packages/virtualenvs/webapp-qv(実際のパス)/bin/python",
-    "python.autoComplete.extraPaths": ["[repository までの絶対パス]/python-packages/virtualenvs/webapp-qv(実際のパス)/lib/python3.10/site-packages"],
+    "python.autoComplete.extraPaths": ["${workspaceFolder}/webapp/.venv/lib/python*/site-packages"]
 }
 ```

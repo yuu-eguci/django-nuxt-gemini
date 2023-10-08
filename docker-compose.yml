@@ -43,10 +43,10 @@ services:
     stdin_open: true
     volumes:
       - ./webapp:/webapp
-      # pipenv 仮想環境をホストと共有。
-      - ./python-packages:/root/.local/share
     # NOTE: 開発環境では .env を使うし、本番環境では .env を (GitHub Actions が) 上書きして使うことを想定。
     environment:
+      # Pipenv 仮想環境を webapp ディレクトリ内に作るための設定。
+      - PIPENV_VENV_IN_PROJECT=1
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
