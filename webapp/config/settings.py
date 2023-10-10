@@ -156,7 +156,7 @@ LOGGING = {
         # とりあえず ISO 8601 形式の JST 時刻で出力する。
         'standard': {
             '()': JSTFormatter,
-            'format': '[%(asctime)s] [%(levelname)s] %(message)s',
+            'format': '[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s',
             # NOTE: %z では ISO 8601 基本形式の +0900 になっちゃう。
             'datefmt': '%Y-%m-%dT%H:%M:%S+09:00',
             # 'datefmt': '%Y-%m-%dT%H:%M:%SZ',
