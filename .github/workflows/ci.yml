@@ -1,0 +1,65 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [ dev ]
+
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.10'
+  NODE_VERSION: '14.x'
+
+jobs:
+  # webapp の Django 側をテストします。
+  django-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Pipenv
+        run: python -m pip install pipenv
+
+      # NOTE: 以降、 Python のルートディレクトリは ./webapp です。
+      - name: Install dependencies
+        run: pipenv install --dev
+        working-directory: ./webapp
+
+      - name: Run Flake8 linting
+        run: pipenv run flake8 --config setup.cfg --show-source .
+        working-directory: ./webapp
+
+      - name: Run Mypy type checking
+        run: pipenv run mypy --config-file setup.cfg
+        working-directory: ./webapp
+
+      - name: Run Django tests
+        run: pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
+        working-directory: ./webapp
+
+  # webapp の Nuxt.js 側をテストを yarn でします。
+  nuxt-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # NOTE: 以降、 Node.js のルートディレクトリは ./webapp/frontend-nuxt です。
+      - name: Install dependencies
+        run: yarn install --dev
+        working-directory: ./webapp/frontend-nuxt
+
+      - name: Run ESLint linting
+        run: yarn lint
+        working-directory: ./webapp/frontend-nuxt
+
+      - name: Run Nuxt.js tests
+        run: yarn test
+        working-directory: ./webapp/frontend-nuxt
