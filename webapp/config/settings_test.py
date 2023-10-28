@@ -1,4 +1,5 @@
 import os
+
 from .settings import *  # noqa: F401, F403
 
 # ユニットテストでは root ユーザーを使うための設定です。

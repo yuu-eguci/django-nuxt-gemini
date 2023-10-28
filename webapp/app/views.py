@@ -1,5 +1,6 @@
 import logging
-from django.http import JsonResponse, HttpRequest
+
+from django.http import HttpRequest, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 

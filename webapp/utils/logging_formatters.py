@@ -1,8 +1,8 @@
 """
 test: utils.tests.test_logging_formatters
 """
+from datetime import datetime, timedelta, timezone
 from logging import Formatter, LogRecord
-from datetime import datetime, timezone, timedelta
 
 
 class JSTFormatter(Formatter):

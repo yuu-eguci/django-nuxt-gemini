@@ -4,9 +4,10 @@ utils.tests.test_logging_formatters
 
 import logging
 import unittest
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 from logging import LogRecord
-from utils.logging_formatters import UTCFormatter, JSTFormatter
+
+from utils.logging_formatters import JSTFormatter, UTCFormatter
 
 
 class TestJSTFormatter(unittest.TestCase):

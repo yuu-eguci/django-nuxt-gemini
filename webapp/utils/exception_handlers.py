@@ -1,11 +1,11 @@
-from typing import Any
 import logging
-from rest_framework.views import exception_handler
-from rest_framework.response import Response
-from rest_framework.request import Request
-from django.http import JsonResponse
-from rest_framework.status import HTTP_500_INTERNAL_SERVER_ERROR
+from typing import Any
 
+from django.http import JsonResponse
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.status import HTTP_500_INTERNAL_SERVER_ERROR
+from rest_framework.views import exception_handler
 
 logger = logging.getLogger(__name__)
 
