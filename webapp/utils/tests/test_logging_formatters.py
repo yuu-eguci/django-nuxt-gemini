@@ -11,6 +11,8 @@ from utils.logging_formatters import JSTFormatter, UTCFormatter
 
 
 class TestJSTFormatter(unittest.TestCase):
+    # NOTE: なくても良い。が、あると mypy がクラス変数として cls.record あるいは self.record を認識してくれる。
+    record: LogRecord
 
     @classmethod
     def setUpClass(cls):
@@ -43,6 +45,8 @@ class TestJSTFormatter(unittest.TestCase):
 
 
 class TestUTCFormatter(unittest.TestCase):
+    # NOTE: なくても良い。が、あると mypy がクラス変数として cls.record あるいは self.record を認識してくれる。
+    record: LogRecord
 
     @classmethod
     def setUpClass(cls):
