@@ -1,3 +1,6 @@
+"""
+test: utils.tests.test_logging_formatters
+"""
 from logging import Formatter, LogRecord
 from datetime import datetime, timezone, timedelta
 
