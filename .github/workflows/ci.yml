@@ -31,7 +31,7 @@ jobs:
 
       # NOTE: 以降、 Python のルートディレクトリは ./webapp です。
       - name: Install dependencies
-        run: pipenv install --dev
+        run: pipenv sync --dev
         working-directory: ./webapp
 
       - name: Run Flake8 linting
