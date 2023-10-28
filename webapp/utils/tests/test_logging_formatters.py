@@ -11,14 +11,16 @@ from utils.logging_formatters import UTCFormatter, JSTFormatter
 
 class TestJSTFormatter(unittest.TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
         # ログレコードを作成。 (created, msecs は自動でセットされる。)
-        self.record = LogRecord(
+        cls.record = LogRecord(
             name="test", level=logging.DEBUG, pathname="", lineno=0, msg="Sample message.", args=(), exc_info=None)
         # created を上書き。
-        self.record.created = datetime.timestamp(datetime(2023, 2, 7, tzinfo=timezone.utc))
+        cls.record.created = datetime.timestamp(datetime(2023, 2, 7, tzinfo=timezone.utc))
         # msecs を上書き。
-        self.record.msecs = 0
+        cls.record.msecs = 0
 
     def test_default_formatter(self):
         # デフォルトの Formatter が作成するログメッセージを確認。
@@ -41,15 +43,17 @@ class TestJSTFormatter(unittest.TestCase):
 
 class TestUTCFormatter(unittest.TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
         # ログレコードを作成。 (created, msecs は自動でセットされる。)
-        self.record = LogRecord(
+        cls.record = LogRecord(
             name="test", level=logging.DEBUG, pathname="", lineno=0, msg="Sample message.", args=(), exc_info=None)
         # created を上書き。
         JST = timezone(timedelta(hours=+9), 'JST')
-        self.record.created = datetime.timestamp(datetime(2023, 2, 7, 9, tzinfo=JST))
+        cls.record.created = datetime.timestamp(datetime(2023, 2, 7, 9, tzinfo=JST))
         # msecs を上書き。
-        self.record.msecs = 0
+        cls.record.msecs = 0
 
     def test_UTCFormatter(self):
         # UTCFormatter は自動で UTC で表示することを確認。
