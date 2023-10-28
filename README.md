@@ -68,9 +68,13 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 ```
 
 ```bash
-# テストコマンド。
+# Test commands.
+time pipenv run flake8 --config setup.cfg --show-source .
+time pipenv run mypy --config-file setup.cfg
 time pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
+
 (cd ./frontend-nuxt; time yarn test .)
+(cd ./frontend-nuxt; time yarn lint)
 ```
 
 ## Nuxt.js を静的サイトとして nginx で配信する
