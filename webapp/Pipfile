@@ -13,6 +13,7 @@ djangorestframework = "*"
 flake8 = "*"
 mypy = "*"
 django-cors-headers = "*"
+django-stubs = {version = "*", extras = ["compatible-mypy"]}
 
 [requires]
 python_version = "3.10"
