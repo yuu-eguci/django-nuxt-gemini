@@ -23,7 +23,7 @@ def custom_exception_handler(exc: Exception, context: dict[str, Any]) -> Respons
     """
     # Call REST framework's default exception handler first,
     # to get the standard error response.
-    response: Response = exception_handler(exc, context)
+    response: Response | None = exception_handler(exc, context)
     request: Request = context['request']
 
     # 何であれエラーが発生した場合はロギング。
