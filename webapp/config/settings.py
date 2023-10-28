@@ -168,6 +168,8 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
+            # NOTE: システムロケールが en-us だと、マルチバイト文字が出力されないことがあった。
+            'encoding': 'utf-8',
         },
         # ファイル出力用のハンドラ。 standard format を TimedRotatingFileHandler で使う。
         # 1日ごとにログファイルをローテーション。30日まで保存。
@@ -178,6 +180,8 @@ LOGGING = {
             'interval': 1,
             'backupCount': 30,
             'formatter': 'standard',
+            # NOTE: システムロケールが en-us だと、マルチバイト文字が出力されないことがあった。
+            'encoding': 'utf-8',
         },
     },
     'loggers': {
