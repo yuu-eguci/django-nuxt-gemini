@@ -8,12 +8,17 @@ on:
 
 env:
   PYTHON_VERSION: '3.10'
-  NODE_VERSION: '14.x'
+  NODE_VERSION: '18.x'
 
 jobs:
   # webapp の Django 側をテストします。
   django-job:
     runs-on: ubuntu-latest
+
+    # pipenv には working-directory: ./webapp のひとつ上の .env を使ってほしい。
+    env:
+      PIPENV_DOTENV_LOCATION: ../.env
+
     steps:
       - uses: actions/checkout@v4
 
