@@ -17,7 +17,7 @@ jobs:
 
     # pipenv には working-directory: ./webapp のひとつ上の .env を使ってほしい。
     env:
-      PIPENV_DOTENV_LOCATION: ../.env
+      PIPENV_DOTENV_LOCATION: ../local.env
 
     steps:
       - uses: actions/checkout@v4
