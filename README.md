@@ -104,7 +104,7 @@ git fetch upstream-gemini
 # この状態だと commit 履歴とまったく合ってないので 'detached HEAD' state になる。
 git checkout upstream-gemini/main
 
-# 好きなところまで reset で戻る。
+# 好きなところまで reset で戻る。 (前回のバージョンを指定するのがよさげ)
 git reset --mixed HEAD^
 
 # Changes を、そのまま main へコミットしてもいいし、 update-from-upstream ブランチを作ってマージしてもいいし。
