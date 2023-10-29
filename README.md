@@ -80,6 +80,37 @@ time pipenv run python manage.py test --failfast --parallel --settings=config.se
 (cd ./frontend-nuxt; time yarn lint)
 ```
 
+## Gemini の更新を派生リポジトリへ取り込む手順
+
+```bash
+# 派生リポジトリ側で行う↓
+
+# django-nuxt-gemini を upstream-gemini branch として登録する。
+git remote add upstream-gemini git@github.com:yuu-eguci/django-nuxt-gemini.git
+
+# このリポジトリの origin はもちろん自分、 upstream-gemini は Gemini という設定になっていることを確認。
+git remote -v
+# origin  https://github.com/user/派生リポジトリ.git (fetch)
+# origin  https://github.com/user/派生リポジトリ.git (push)
+# upstream-gemini git@github.com:yuu-eguci/django-nuxt-gemini.git (fetch)
+# upstream-gemini git@github.com:yuu-eguci/django-nuxt-gemini.git (push)
+# 間違えちゃったら削除↓
+git remote rm upstream-gemini
+
+# Gemini の現状を取得。
+git fetch upstream-gemini
+
+# Gemini の main ブランチへ切り替える。
+# この状態だと commit 履歴とまったく合ってないので 'detached HEAD' state になる。
+git checkout upstream-gemini/main
+
+# 好きなところまで reset で戻る。
+git reset --mixed HEAD^
+
+# Changes を、そのまま main へコミットしてもいいし、 update-from-upstream ブランチを作ってマージしてもいいし。
+# ➕ Update from django-nuxt-gemini upstream
+```
+
 ## Nuxt.js を静的サイトとして nginx で配信する
 
 ここまで出来たよ!
