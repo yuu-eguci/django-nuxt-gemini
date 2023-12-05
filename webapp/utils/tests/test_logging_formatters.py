@@ -7,7 +7,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from logging import LogRecord
 
-from utils.logging_formatters import JSTFormatter, UTCFormatter
+from ..logging_formatters import JSTFormatter, UTCFormatter
 
 
 class TestJSTFormatter(unittest.TestCase):

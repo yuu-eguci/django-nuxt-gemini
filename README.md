@@ -27,6 +27,7 @@ Django エリアのいいところ
 - いちおう、 MVC2 っぽい構成になってるハズだよ。 View + Service + Repository + Model って感じになってるよ。
 - コンソールと、 ./logs/ へのロギングができてるよ。ロギングの日時は UTC と JST を選べる。
 - GitHub Actions で flake8, mypy, test がちゃんと走るよ。
+- プロジェクト内部のモジュールをインポートするときは、つねに相対インポートを使ってる (3rd party との区別のため) よ。
 
 Nuxt.js エリアのいいところ
 
