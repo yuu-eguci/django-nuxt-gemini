@@ -4,6 +4,11 @@
         "titleBar.activeBackground": "#860437",
         "titleBar.activeForeground": "#FFFBFD"
     },
-    "python.autoComplete.extraPaths": ["${workspaceFolder}/webapp/.venv/lib/python*/site-packages"],
-    "python.linting.mypyEnabled": false
+    "python.autoComplete.extraPaths": [
+        "${workspaceFolder}/webapp/.venv/lib/python3.10/site-packages"
+    ],
+    "flake8.cwd": "${workspaceFolder}/webapp",
+    "autopep8.args": [
+        "--max-line-length 120 --exclude .venv,migrations --in-place --recursive ."
+    ]
 }
