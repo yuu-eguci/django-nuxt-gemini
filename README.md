@@ -24,6 +24,7 @@ Django エリアのいいところ
 
 - 開発環境用、本番環境用の settings が分かれてるよ。
 - 当然 Pipenv で管理できてるよ。
+- いちおう、 MVC2 っぽい構成になってるハズだよ。 View + Service + Repository + Model って感じになってるよ。
 - コンソールと、 ./logs/ へのロギングができてるよ。ロギングの日時は UTC と JST を選べる。
 - GitHub Actions で flake8, mypy, test がちゃんと走るよ。
 
