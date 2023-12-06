@@ -38,11 +38,8 @@ Nginx エリアのいいところ
 ## runserver と yarn dev で起動するところまで
 
 ```bash
-# Just for the first installation.
-cp ./local.env ./.env
-
 # Create containers
-docker compose up -d
+cp ./local.env ./.env; docker compose up -d; docker compose exec webapp-service sh
 
 # Get into webapp-service
 # NOTE: It's a good practice to have separate terminals for Django and Nuxt.js for easier debugging and log tracking.
