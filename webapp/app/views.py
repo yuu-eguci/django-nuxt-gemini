@@ -38,7 +38,7 @@ class BarView(APIView):
     """
 
     def get(self, request, *args, **kwargs):
-        # NOTE: utils.exception_handlers.custom_exception_handler を試すためにわざと例外を発生させているよ。
+        # NOTE: shared.exception_handlers.custom_exception_handler を試すためにわざと例外を発生させているよ。
         raise NotImplementedError(
             "To test custom_exception_handler, this endpoint raises NotImplementedError intentionally.")
         return JsonResponse({"message": "This endpoint is GET bar."})

@@ -1,5 +1,5 @@
 """
-test: utils.tests.test_logging_formatters
+test: shared.tests.test_logging_formatters
 """
 from datetime import datetime, timedelta, timezone
 from logging import Formatter, LogRecord

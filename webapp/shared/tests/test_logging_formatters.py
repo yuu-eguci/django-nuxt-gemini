@@ -1,5 +1,5 @@
 """
-utils.tests.test_logging_formatters
+shared.tests.test_logging_formatters
 """
 
 import logging

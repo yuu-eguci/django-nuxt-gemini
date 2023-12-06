@@ -14,7 +14,7 @@ import logging
 import os
 from pathlib import Path
 
-from utils.logging_formatters import JSTFormatter
+from shared.logging_formatters import JSTFormatter
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'utils.exception_handlers.custom_exception_handler',
+    'EXCEPTION_HANDLER': 'shared.exception_handlers.custom_exception_handler',
 }
 
 MIDDLEWARE = [
