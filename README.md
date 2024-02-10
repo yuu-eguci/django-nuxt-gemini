@@ -35,6 +35,10 @@ Nuxt.js エリアのいいところ
 
 Nginx エリアのいいところ
 
+いいことばかりじゃないところ
+
+- 1アプリケーションにつき1 docker container を使うと、 VSCode 開発のときに devcontainer をキレイに使えたりして利点がある。ひとつの container に複数アプリケーションが入っていると、その利点を利用することが不可。
+
 ## runserver と yarn dev で起動するところまで
 
 ```bash
@@ -79,7 +83,9 @@ time pipenv run python manage.py test --failfast --parallel --settings=config.se
 (cd ./frontend-nuxt; time yarn lint)
 ```
 
-## Gemini の更新を派生リポジトリへ取り込む手順
+## 【Deprecated】 Gemini の更新を派生リポジトリへ取り込む手順
+
+このプロジェクトは取りやめた。たぶんアホな試みだった。
 
 ```bash
 # 派生リポジトリ側で行う↓
