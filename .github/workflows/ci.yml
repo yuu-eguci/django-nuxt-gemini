@@ -34,12 +34,8 @@ jobs:
         run: pipenv sync --dev
         working-directory: ./webapp
 
-      - name: Run Flake8 linting
-        run: pipenv run flake8 --config setup.cfg --show-source .
-        working-directory: ./webapp
-
-      - name: Run Mypy type checking
-        run: pipenv run mypy --config-file setup.cfg
+      - name: Run Ruff linting
+        run: pipenv run ruff check .
         working-directory: ./webapp
 
       - name: Run Django tests

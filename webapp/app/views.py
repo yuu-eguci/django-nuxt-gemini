@@ -1,19 +1,16 @@
-import logging
 import asyncio
+import logging
 from datetime import datetime
 
-from django.views.decorators.csrf import csrf_exempt
+from asgiref.sync import async_to_sync
 from django.http import HttpRequest, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from asgiref.sync import sync_to_async, async_to_sync
-from django.utils.decorators import async_only_middleware
-from django.views.decorators.http import require_http_methods
 
 logger = logging.getLogger(__name__)
 
 
-@api_view(['GET', 'POST'])
+@api_view(["GET", "POST"])
 def foo_view(request: HttpRequest):
     """
     View を関数ベースで実装するパターン。
@@ -29,9 +26,9 @@ def foo_view(request: HttpRequest):
     path('foo', views.foo_view)
     """
 
-    if request.method == 'GET':
+    if request.method == "GET":
         return JsonResponse({"requestId": request.request_id, "message": "This endpoint is GET foo."})
-    elif request.method == 'POST':
+    elif request.method == "POST":
         return JsonResponse({"requestId": request.request_id, "message": "This endpoint is POST foo."})
 
 
@@ -56,7 +53,8 @@ class BarView(APIView):
     def get(self, request, *args, **kwargs):
         # NOTE: shared.exception_handlers.custom_exception_handler を試すためにわざと例外を発生させているよ。
         raise NotImplementedError(
-            "To test custom_exception_handler, this endpoint raises NotImplementedError intentionally.")
+            "To test custom_exception_handler, this endpoint raises NotImplementedError intentionally."
+        )
         return JsonResponse({"requestId": request.request_id, "message": "This endpoint is GET bar."})
 
     def post(self, request, *args, **kwargs):
@@ -96,10 +94,9 @@ class BazView(APIView):
         # [INFO] name='3秒待機' wait_time=3 now='11:13:52'
         # 同時に実行されている! これぞ async!
 
-        return JsonResponse({
-            "requestId": request.request_id,
-            "message": "This endpoint is POST baz for testing async view."
-        })
+        return JsonResponse(
+            {"requestId": request.request_id, "message": "This endpoint is POST baz for testing async view."}
+        )
 
     async def __wait_task(self, name: str, wait_time: int):
         """
