@@ -24,8 +24,10 @@ Django エリアのいいところ
 
 - 開発環境用、本番環境用の settings が分かれてるよ。
 - 当然 Pipenv で管理できてるよ。
-- いちおう、 MVC2 っぽい構成になってるハズだよ。 View + Service + Repository + Model って感じになってるよ。
 - コンソールと、 ./logs/ へのロギングができてるよ。ロギングの日時は UTC と JST を選べる。
+- ユニットテストの基礎もちゃんとあるよ。
+- ひさしぶりに来て、 "view どんなふうに書くんだっけ?" ってなったときのため views に view のベースを書いてるよ。
+    - 最近、 async の view も足しといたよ。
 - GitHub Actions で flake8, mypy, test がちゃんと走るよ。
 - プロジェクト内部のモジュールをインポートするときは、つねに相対インポートを使ってる (3rd party との区別のため) よ。
 
@@ -42,6 +44,10 @@ Nginx エリアのいいところ
 ## runserver と yarn dev で起動するところまで
 
 ```bash
+# NOTE: (2025-03-04) 久しぶりに clone してみたけど、マジで
+#       Create containers -> Django のほう
+#       をサッサと打つだけで開始できた。イイぞ。
+
 # Create containers
 cp ./local.env ./.env; docker compose up -d; docker compose exec webapp-service sh
 
@@ -62,6 +68,7 @@ create-nuxt-app -v
 # NOTE: warning が出るけど、それは完全一致検索を欠く yarn list が悪い。
 
 # Django のほう。
+# NOTE: PIPENV_VENV_IN_PROJECT は env で設定してある。
 pipenv sync --dev
 pipenv run python manage.py migrate
 pipenv run python manage.py runserver 0.0.0.0:8000
