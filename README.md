@@ -4,7 +4,7 @@ django-nuxt-gemini ♊
 TODO: 開発環境で、 3001 -> 8001 するところまでは完成済み。
       8081 のみで動かすところが未完成。具体的には django 側に本番用の settings が必要。
 
-✌🏽✌🏽 🐍 🐳 🇳 Python 3.10 + Django v4 + Yarn + Nuxt v2 + Nginx + Docker + GitHub Actions + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
+✌🏽✌🏽 🐍 🐳 🇳 Python 3.10 + Django v4 + Yarn + Nuxt v2 + Nginx + Docker + GitHub Actions + Ruff + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
 
 - python + django + yarn + nuxt + nginx なんつー container を用意して、
 - 開発環境では runserver (8000 -> 8081) と yarn dev (3000 -> 3001) で開発して、
@@ -28,7 +28,7 @@ Django エリアのいいところ
 - ユニットテストの基礎もちゃんとあるよ。
 - ひさしぶりに来て、 "view どんなふうに書くんだっけ?" ってなったときのため views に view のベースを書いてるよ。
     - 最近、 async の view も足しといたよ。
-- GitHub Actions で flake8, mypy, test がちゃんと走るよ。
+- GitHub Actions で ruff, test がちゃんと走るよ。
 - プロジェクト内部のモジュールをインポートするときは、つねに相対インポートを使ってる (3rd party との区別のため) よ。
 
 Nuxt.js エリアのいいところ
