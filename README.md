@@ -27,7 +27,11 @@ Django エリアのいいところ
 - コンソールと、 ./logs/ へのロギングができてるよ。ロギングの日時は UTC と JST を選べる。
 - ユニットテストの基礎もちゃんとあるよ。
 - ひさしぶりに来て、 "view どんなふうに書くんだっけ?" ってなったときのため views に view のベースを書いてるよ。
-    - 最近、 async の view も足しといたよ。
+    - 最近、 async の view も足しといたよ。ただ動かすにはこれ↓が必要かも
+    - uvicorn (asgi サーバ) を pip install
+    - gunicorn が内蔵の wsgi サーバのみならず uvicorn を動かせるように設定する
+    - そうすると gunicorn が uvicorn を worker として動かして、
+    - uvicorn は asgi サーバとして django を配信してくれる!
 - GitHub Actions で ruff, test がちゃんと走るよ。
 - プロジェクト内部のモジュールをインポートするときは、つねに相対インポートを使ってる (3rd party との区別のため) よ。
 
