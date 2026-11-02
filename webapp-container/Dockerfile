@@ -15,7 +15,8 @@ RUN apk add --no-cache --update \
     pip install --upgrade pip setuptools && \
     pip install -U pipenv
 
-RUN apk add --no-cache --update nodejs npm && \
+# NOTE: make, g++ は yarn install でネイティブモジュール (vue-jest が依存する deasync など) をビルドするために必要です。
+RUN apk add --no-cache --update nodejs npm make g++ && \
     npm install --global yarn && \
     yarn global add create-nuxt-app
 
