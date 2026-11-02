@@ -81,7 +81,7 @@ export default {
   name: 'IndexPage',
   async mounted () {
     try {
-      const { data } = await this.$axios.get('api/v1/foo')
+      const { data } = await this.$axios.get('api/app/foo')
       // eslint-disable-next-line no-console
       console.info({ data })
     } catch (error) {
