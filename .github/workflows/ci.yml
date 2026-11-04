@@ -14,7 +14,7 @@ permissions:
 
 env:
   PYTHON_VERSION: '3.10'
-  NODE_VERSION: '18.x'
+  NODE_VERSION: '24.x'
 
 jobs:
   # webapp の Django 側をテストします。
@@ -60,7 +60,7 @@ jobs:
 
       # NOTE: 以降、 Node.js のルートディレクトリは ./webapp/frontend-nuxt です。
       - name: Install dependencies
-        run: yarn install --dev
+        run: yarn install --frozen-lockfile
         working-directory: ./webapp/frontend-nuxt
 
       - name: Run ESLint linting
