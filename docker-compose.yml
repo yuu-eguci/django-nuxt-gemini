@@ -50,6 +50,6 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_HOSTNAME=${MYSQL_HOSTNAME}
       - MYSQL_PORT=${MYSQL_PORT}
-      - APP_HOST=${APP_HOST}
+      - API_URL=${API_URL}
     depends_on:
       - mysql-service
