@@ -1,5 +1,5 @@
 # 他の image はこちら https://hub.docker.com/_/python
-FROM python:3.10-alpine
+FROM python:3.14-alpine
 
 WORKDIR /webapp
 
