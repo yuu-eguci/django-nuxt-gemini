@@ -44,6 +44,7 @@ services:
       # Pipenv 仮想環境を webapp ディレクトリ内に作るための設定。
       - PIPENV_VENV_IN_PROJECT=1
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
