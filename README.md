@@ -4,7 +4,7 @@ django-nuxt-gemini ♊
 TODO: 開発環境で、 3001 -> 8001 するところまでは完成済み。
       8081 のみで動かすところが未完成。具体的には django 側に本番用の settings が必要。
 
-✌🏽✌🏽 🐍 🐳 🇳 Python 3.10 + Django v4 + Yarn + Nuxt v2 + Nginx + Docker + GitHub Actions + Ruff + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
+✌🏽✌🏽 🐍 🐳 🇳 Python 3.14 + Django v5.2 LTS + Yarn + Nuxt v2 + Nginx + Docker + GitHub Actions + Ruff + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
 
 - python + django + yarn + nuxt + nginx なんつー container を用意して、
 - 開発環境では runserver (8000 -> 8081) と yarn dev (3000 -> 3001) で開発して、
@@ -60,13 +60,13 @@ cp ./local.env ./.env; docker compose up -d; docker compose exec webapp-service 
 docker compose exec webapp-service sh
 # Check↓
 python -V
-# --> Python 3.10.12
+# --> Python 3.14.10
 pipenv --version
-# --> pipenv, version 2023.7.23
+# --> pipenv, version 2026.10.5
 yarn -v
-# --> 1.22.19
-create-nuxt-app -v
-# --> create-nuxt-app/5.0.0 linux-x64 node-v18.17.0
+# --> 1.22.22
+node -v
+# --> v24.22.1
 (cd ./frontend-nuxt; yarn list nuxt)
 # --> └─ nuxt@2.17.1
 # NOTE: warning が出るけど、それは完全一致検索を欠く yarn list が悪い。
