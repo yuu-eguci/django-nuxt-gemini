@@ -52,8 +52,9 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: process.env.BASE_URL || 'http://localhost:8001/'
+    // NOTE: API の呼び出し先は env の API_URL で指定します。 (local.env を参照してください。)
+    //       @nuxtjs/axios も API_URL を baseURL として読むので、名前をそろえています。
+    baseURL: process.env.API_URL || 'http://localhost:8001/'
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
