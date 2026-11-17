@@ -14,11 +14,10 @@ NOTE: いちいち UBUNTU のほうも更新するの面倒なんだよね……
 [ -f ./staging.env ] && echo "Env exists, proceed." || echo "Error: No env."
 
 # Nuxt.js の静的サイトを生成して static フォルダへ配置。
-(cd ./webapp/frontend-nuxt; yarn install)
-
-# UBUNTU 環境用の .env を適用してビルド。
-# NOTE: .env 内部のコメント行を grep で無視しつつ行う。
-(cd ./webapp/frontend-nuxt; env $(grep -v '^#' ../../staging.env | xargs) yarn generate --production)
+# UBUNTU 環境用の staging.env を適用してビルドします。
+# NOTE: Node.js / Yarn は webapp-service コンテナのものを使うので、ホストに Node.js は不要です。
+#       --env-file で staging.env の API_URL などをコンテナへ渡しています。
+docker compose --env-file ./staging.env run --rm --no-deps --build -w /webapp/frontend-nuxt webapp-service sh -c 'yarn install --frozen-lockfile && yarn generate --production'
 
 mkdir ./webapp/static; mv ./webapp/frontend-nuxt/dist/* ./webapp/static/
 

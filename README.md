@@ -4,7 +4,7 @@ django-nuxt-gemini ♊
 TODO: 開発環境で、 3001 -> 8001 するところまでは完成済み。
       8081 のみで動かすところが未完成。具体的には django 側に本番用の settings が必要。
 
-✌🏽✌🏽 🐍 🐳 🇳 Python 3.14 + Django v5.2 LTS + Yarn + Nuxt v2 + Nginx + Docker + GitHub Actions + Ruff + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
+✌🏽✌🏽 🐍 🐳 🇳 Python 3.14 + Django v5.2 LTS + Node.js 26 LTS + Yarn + Nuxt v2 (TypeScript) + Nginx + Docker + GitHub Actions + Ruff + CI/CD | Nuxt.js も使いてーし、 Django も使いてーけど、サーバはふたつも使いたくねーから、 Nginx を使って Django と Nuxt.js を同ドメインで配信しよーぜ。あと Docker は当然使うぜ。
 
 - python + django + yarn + nuxt + nginx なんつー container を用意して、
 - 開発環境では runserver (8000 -> 8081) と yarn dev (3000 -> 3001) で開発して、
@@ -37,7 +37,9 @@ Django エリアのいいところ
 
 Nuxt.js エリアのいいところ
 
-- GitHub Actions で eslint, test がちゃんと走るよ。
+- `.vue` の `<script>`、 `nuxt.config.ts`、テストは TypeScript で書いています。
+    - `yarn typecheck` (vue-tsc) で、 `.vue` の template まで型チェックできます。
+- GitHub Actions で eslint, typecheck, test, generate が走ります。
 
 Nginx エリアのいいところ
 
@@ -53,7 +55,9 @@ Nginx エリアのいいところ
 #       をサッサと打つだけで開始できた。イイぞ。
 
 # Create containers
-cp ./local.env ./.env; docker compose up -d; docker compose exec webapp-service sh
+# NOTE: Python / Node.js / Yarn はすべて webapp-service コンテナの中にあります。ホストに Node.js を入れる必要はありません。
+# NOTE: Dockerfile を更新したあとは --build でイメージを作り直してください。
+cp ./local.env ./.env; docker compose up -d --build; docker compose exec webapp-service sh
 
 # Get into webapp-service
 # NOTE: It's a good practice to have separate terminals for Django and Nuxt.js for easier debugging and log tracking.
@@ -62,13 +66,13 @@ docker compose exec webapp-service sh
 python -V
 # --> Python 3.14.10
 pipenv --version
-# --> pipenv, version 2026.10.5
+# --> pipenv, version 2026.11.0
 yarn -v
 # --> 1.22.22
 node -v
-# --> v24.22.1
+# --> v26.13.1
 (cd ./frontend-nuxt; yarn list nuxt)
-# --> └─ nuxt@2.17.1
+# --> └─ nuxt@2.18.1
 # NOTE: warning が出るけど、それは完全一致検索を欠く yarn list が悪い。
 
 # Django のほう。
@@ -86,11 +90,13 @@ pipenv run python manage.py runserver 0.0.0.0:8000
 
 ```bash
 # Test commands.
+# NOTE: webapp-service コンテナの中 (/webapp) で実行します。
 time pipenv run ruff check .
 time pipenv run python manage.py test --failfast --parallel --settings=config.settings_test
 
 (cd ./frontend-nuxt; time yarn test .)
 (cd ./frontend-nuxt; time yarn lint)
+(cd ./frontend-nuxt; time yarn typecheck)
 ```
 
 ## 【Deprecated】 Gemini の更新を派生リポジトリへ取り込む手順
