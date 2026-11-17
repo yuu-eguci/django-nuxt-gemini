@@ -12,14 +12,17 @@
   </v-app>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue, { type PropType } from 'vue'
+import type { NuxtError } from '@nuxt/types'
+
+export default Vue.extend({
   name: 'EmptyLayout',
   layout: 'empty',
   props: {
     error: {
-      type: Object,
-      default: null
+      type: Object as PropType<NuxtError>,
+      required: true
     }
   },
   data () {
@@ -35,7 +38,7 @@ export default {
       title
     }
   }
-}
+})
 </script>
 
 <style scoped>
