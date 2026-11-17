@@ -8,7 +8,7 @@ describe('IndexPage', () => {
 
     shallowMount(IndexPage, {
       mocks: { $axios },
-      stubs: ['v-row', 'v-col', 'v-card', 'v-card-title', 'v-card-text', 'v-card-actions', 'v-spacer', 'v-btn']
+      stubs: ['NuxtLogo', 'VuetifyLogo', 'v-row', 'v-col', 'v-card', 'v-card-title', 'v-card-text', 'v-card-actions', 'v-spacer', 'v-btn']
     })
     await Promise.resolve()
 

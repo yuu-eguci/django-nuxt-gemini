@@ -14,7 +14,8 @@ permissions:
 
 env:
   PYTHON_VERSION: '3.14'
-  NODE_VERSION: '24.x'
+  # NOTE: dev container (webapp-container/Dockerfile) の Node.js とそろえています。
+  NODE_VERSION: '26.x'
 
 jobs:
   # webapp の Django 側をテストします。
@@ -67,6 +68,16 @@ jobs:
         run: yarn lint
         working-directory: ./webapp/frontend-nuxt
 
+      # .vue の template も含めて vue-tsc で型チェックします。
+      - name: Run TypeScript type checking
+        run: yarn typecheck
+        working-directory: ./webapp/frontend-nuxt
+
       - name: Run Nuxt.js tests
         run: yarn test
+        working-directory: ./webapp/frontend-nuxt
+
+      # 本番と同じく yarn generate で静的サイトを生成できることを確認します。
+      - name: Generate Nuxt.js static site
+        run: yarn generate
         working-directory: ./webapp/frontend-nuxt

@@ -6,6 +6,14 @@
   >
 </template>
 
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+  name: 'VuetifyLogo'
+})
+</script>
+
 <style>
 .vuetify-logo {
   height: 180px;
